@@ -6,6 +6,6 @@ pytorchの練習
 ## setup & usage
 ```
 git clone git@github.com: Toshiki-Sasaki/pytorch-mnist.git
-pip install - r requirements.txt
+pip install -r requirements.txt
 python pytorch-mnist
 ```
