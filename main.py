@@ -7,6 +7,7 @@ from torchvision.datasets import MNIST
 import torch.optim as optim
 import torch.nn as nn
 from torch.autograd import Variable
+from sklearn.metrics import confusion_matrix
 
 from model import Net
 
@@ -38,7 +39,7 @@ net = Net()
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(net.parameters(), lr=0.01)
 
-for epoch in range(3):
+for epoch in range(1):
     running_loss = 0.0
     for i, data in enumerate(train_loader):
         inputs, labels = data
@@ -62,10 +63,17 @@ print('Finished Training')
 
 correct = 0
 total = 0
+y_true = []
+y_pred = []
 for data in test_loader:
     inputs, labels = data
     outputs = net(Variable(inputs))
     _, predicted = torch.max(outputs.data, 1)
     total += labels.size(0)
     correct += (predicted == labels).sum()
+    y_true += list( labels.numpy() )
+    y_pred += list( predicted.numpy() )
 print('Accuracy {} / {} = {}'.format(correct.item(), total, correct.item()/total))
+print('Confusion Matrix :')
+print('{}'.format( confusion_matrix(y_true, y_pred) ))
+
